@@ -2,9 +2,9 @@ import xkcd
 import os
 import sys
 import time
-import logging
+import log
 import urllib
-logging.CurrentLevel = -1 #change on distribution to 0, or 1
+log.CurrentLevel = -1 #change on distribution to 0, or 1
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 try:
@@ -20,13 +20,13 @@ if connection:
     for i in range(1, latest+1):
         if f"{i}" in cached:
             continue
-        if i == 404:
+        if i in [404,1608, 1663]:
             continue
         try:
-            logging.log(1,(xkcd.Comic(i).download("./comics", f"{i}")))
+            log.log(1,(xkcd.Comic(i).download("./comics", f"{i}")))
             time.sleep(0.1)
-            logging.log(0,f"comic {i} downloaded")
+            log.log(0,f"comic {i} downloaded")
         except urllib.error.HTTPError:
-            logging.log(1, f"an error occured while downloading comic #{i}, skipping for now")
+            log.log(1, f"an error occured while downloading comic #{i}, skipping for now")
             continue
         
